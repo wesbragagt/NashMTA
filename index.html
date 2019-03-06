@@ -18,6 +18,68 @@
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
+    <div class="container">
+      <header>
+        <div class="row">
+          <div
+            class="jumbotron col-md-12 bg-dark text-light d-flex flex-row justify-content-center pt-4 mb-3"
+          >
+            <h1>TrainScheduler</h1>
+          </div>
+        </div>
+      </header>
+
+      <div class="row">
+        <div class="col card mb-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" id="train-name">Train Name</th>
+                <th scope="col" id="destination">Destination</th>
+                <th scope="col" id="frequency">Frequency(min)</th>
+                <th scope="col" id="next-arrival">Next Arrival</th>
+                <th scope="col" id="min-away">Minutes Away</th>
+              </tr>
+            </thead>
+            <tbody class="train-data"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row card">
+          <div class="col-12">
+            <div class="card-header">
+                Add Train
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <label for="employee-name-input">Train Name</label>
+                        <input type="name" id="train-name-input" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-role-input">Destination</label>
+                        <input type="text" id="destination-input" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="first-train-time">First train Time (HH:mm - military time)</label>
+                        <input type="date" id="first-train-input" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="employee-monthly-rate">Frenquency(min)</label>
+                        <input type="number" id="frequency" class="form-control">
+                    </div>
+                    <div class="form-group d-flex flex-row-reverse">
+                        <button type="submit" class="btn btn-primary" id="train-submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+          </div>
+      </div>
+
+
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.0.0.slim.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
     <script src="assets/javascript/train.js"></script>
