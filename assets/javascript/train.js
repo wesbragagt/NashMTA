@@ -9,6 +9,9 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// var database = firebase.database();
+var database = firebase.database();
+
 var newTrain = {
   name: "",
   destination: "",
@@ -16,6 +19,7 @@ var newTrain = {
   frequency: 0
 };
 
+// ON CLICK SUBMIT BUTTON
 $("#train-submit").on("click", function(event) {
   event.preventDefault();
 
@@ -30,5 +34,11 @@ $("#train-submit").on("click", function(event) {
 
   console.log("---------------------------");
 
-  console.log(newTrain);
+  database.ref().push({
+    trainName: newTrain.name,
+    destination: newTrain.destination,
+    time: newTrain.time,
+    frequency: newTrain.frequency,
+    dateAdded: firebase.database.ServerValue.TIMESTAMP
+  });
 });
