@@ -61,8 +61,6 @@ database.ref().on("child_added", function(childSnapshot) {
 
   // loop through the object and populate the dom with table rows
   $.each(trainDom, function(key, value) {
-    console.log(value);
-
     $(newTr).append("<td>" + value + "</td>");
   });
 
