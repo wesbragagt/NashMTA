@@ -31,7 +31,7 @@ $("#train-submit").on("click", function(event) {
   newTrain.time = $("#first-train-input").val();
   newTrain.frequency = $("#frequency").val();
 
-  console.log("---------------------------");
+  
 
   database.ref().push({
     trainName: newTrain.name,
@@ -44,25 +44,58 @@ $("#train-submit").on("click", function(event) {
 
 // Now populate the page with data from firebase
 
-database.ref().on("child_added", function(childSnapshot) {
-  //   console.log(childSnapshot.val().trainName);
-  //   console.log(childSnapshot.val().destination);
-  //   console.log(childSnapshot.val().time);
-  //   console.log(childSnapshot.val().frequency);
+database.ref().on(
+  "child_added",
+  function(childSnapshot) {
+    // console.log(childSnapshot.val().trainName);
+    // console.log(childSnapshot.val().destination);
+    // console.log(childSnapshot.val().time);
+    // console.log(childSnapshot.val().frequency);
+    
+    var snapVal = childSnapshot.val();
+    
+    var firstArrive = moment(snapVal.time, "hh:mm").format("hh:mm");
+    var now = moment().format("hh:mm");
+    var minAway;
 
-  var trainDom = {
-    name: childSnapshot.val().trainName,
-    destination: childSnapshot.val().destination,
-    time: childSnapshot.val().time,
-    frequency: childSnapshot.val().frequency
-  };
+    
+    console.log(snapVal.frequency);
+    
+    // every time the train has not yet passed
+    if (moment(now,"hh:mm").unix() < moment(firstArrive, "hh:mm").unix()){
+        minAway = moment(firstArrive, "hh:mm").diff(moment(), "m");
+        
+        
+    }
 
-  var newTr = $("<tr>");
+    // every time the train has passed
+    if (moment(now,"hh:mm").unix() >= moment(firstArrive, "hh:mm").unix()){
+        snapVal.time = moment(snapVal.time, "hh:mm").add(snapVal.frequency, "m");
+        minAway = moment(snapVal.time, "hh:mm").diff(moment(), "m");
+    }
 
-  // loop through the object and populate the dom with table rows
-  $.each(trainDom, function(key, value) {
-    $(newTr).append("<td>" + value + "</td>");
-  });
+    
+    
+    
 
-  $(".train-data").append(newTr);
-});
+    var trainDom = {
+      name: snapVal.trainName,
+      destination: snapVal.destination,
+      time: moment(snapVal.time, "hh:mm").format("hh:mm a"),
+      frequency: snapVal.frequency,
+      minAway: minAway
+    };
+
+    var newTr = $("<tr>");
+
+    // loop through the object and populate the dom with table rows
+    $.each(trainDom, function(key, value) {
+      $(newTr).append("<td>" + value + "</td>");
+    });
+
+    $(".train-data").append(newTr);
+  },
+  function(errorObject) {
+    alert(errorObject.data);
+  }
+);
