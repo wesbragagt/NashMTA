@@ -1,0 +1,8 @@
+body {
+    background: url(../prism/prism.png);
+    background-size: auto;
+}
+
+.jumbotron {
+    background: none;
+}

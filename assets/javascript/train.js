@@ -67,16 +67,14 @@ database.ref().on(
       var minAway;
   
       
-      console.log(snapVal.frequency);
+      
       
       // every time the train has not yet passed
       while (moment().unix() > moment(snapVal.time, "hh:mm").unix()){
         //   alert("works");
         snapVal.time = moment(snapVal.time, "hh:mm").add(snapVal.frequency, "m");
         minAway = moment(snapVal.time, "hh:mm").diff(moment(), "m");
-        
-
-        }
+         }
 
     // console.log(moment(snapVal.time, "hh:mm").add(snapVal.frequency, "m").format("hh:mm a"));
         
