@@ -1,3 +1,11 @@
+// time today 
+setInterval(function() {
+    var today = moment().format("hh:mm:ss a");
+    $("#current-time").text((today));
+}, 1000);
+
+
+
 // FIREBASE SETUP
 var config = {
   apiKey: "AIzaSyB_GT3xo5NCtU9LsVOmTEzpKQLQtX0PTso",
@@ -53,30 +61,28 @@ database.ref().on(
     // console.log(childSnapshot.val().frequency);
     
     var snapVal = childSnapshot.val();
-    
-    var firstArrive = moment(snapVal.time, "hh:mm").format("hh:mm");
-    var now = moment().format("hh:mm");
+    var freq = parseInt(snapVal.frequency)*60000;
+    var firstArrive = moment(snapVal.time, "hh:mm").unix();
+    var now = moment().unix();
     var minAway;
 
+    // console.log(firstArrive);
     
-    console.log(snapVal.frequency);
+    // console.log(freq);
+
+    // console.log(
+    //     moment(firstArrive).add(freq, "mm")
+    // );
+    
+    
+    
     
     // every time the train has not yet passed
-    if (moment(now,"hh:mm").unix() < moment(firstArrive, "hh:mm").unix()){
-        minAway = moment(firstArrive, "hh:mm").diff(moment(), "m");
-        
+    if (now < firstArrive){
+        minAway = moment(firstArrive, "hh:mm").diff(moment(), "m");    
         
     }
 
-    // every time the train has passed
-    if (moment(now,"hh:mm").unix() >= moment(firstArrive, "hh:mm").unix()){
-        snapVal.time = moment(snapVal.time, "hh:mm").add(snapVal.frequency, "m");
-        minAway = moment(snapVal.time, "hh:mm").diff(moment(), "m");
-    }
-
-    
-    
-    
 
     var trainDom = {
       name: snapVal.trainName,
