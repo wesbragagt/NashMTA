@@ -70,10 +70,25 @@ database.ref().on(
       console.log(snapVal.frequency);
       
       // every time the train has not yet passed
-      if (moment(now,"hh:mm").unix() <= moment(snapVal.time, "hh:mm").unix()){
+      while (moment().unix() > moment(snapVal.time, "hh:mm").unix()){
+        //   alert("works");
+        snapVal.time = moment(snapVal.time, "hh:mm").add(snapVal.frequency, "m");
         minAway = moment(snapVal.time, "hh:mm").diff(moment(), "m");
-             
-      }
+        
+
+        }
+
+    // console.log(moment(snapVal.time, "hh:mm").add(snapVal.frequency, "m").format("hh:mm a"));
+        
+    // while(moment(snapVal.time, "hh:mm").unix() <= moment().unix()){
+    //     snapVal.time = ;
+        
+    // }
+
+    //   if(moment(now, "hh:mm").unix() >= moment(snapVal.time, "hh:mm").unix()){
+    //     //   alert("works")
+    //       snapVal = moment(snapVal.time, "hh:mm").add(snapVal.frequency, "m").format("hh:mm a");
+    //   }
   
       // every time the train has passed
     //   if (moment(now,"hh:mm").unix() >= moment(firstArrive, "hh:mm").unix()){
