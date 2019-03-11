@@ -1,4 +1,4 @@
-// time today 
+// CLOCK, time today 
 setInterval(function() {
     var today = moment().format("hh:mm:ss a");
     $("#current-time").text((today));
@@ -53,55 +53,53 @@ $("#train-submit").on("click", function(event) {
 // Now populate the page with data from firebase
 
 database.ref().on(
-  "child_added",
-  function(childSnapshot) {
-    // console.log(childSnapshot.val().trainName);
-    // console.log(childSnapshot.val().destination);
-    // console.log(childSnapshot.val().time);
-    // console.log(childSnapshot.val().frequency);
-    
-    var snapVal = childSnapshot.val();
-    var freq = parseInt(snapVal.frequency)*60000;
-    var firstArrive = moment(snapVal.time, "hh:mm").unix();
-    var now = moment().unix();
-    var minAway;
-
-    // console.log(firstArrive);
-    
-    // console.log(freq);
-
-    // console.log(
-    //     moment(firstArrive).add(freq, "mm")
-    // );
-    
-    
-    
-    
-    // every time the train has not yet passed
-    if (now < firstArrive){
-        minAway = moment(firstArrive, "hh:mm").diff(moment(), "m");    
-        
+    "child_added",
+    function(childSnapshot) {
+      // console.log(childSnapshot.val().trainName);
+      // console.log(childSnapshot.val().destination);
+      // console.log(childSnapshot.val().time);
+      // console.log(childSnapshot.val().frequency);
+      
+      var snapVal = childSnapshot.val();
+      
+      var firstArrive = moment(snapVal.time, "hh:mm").format("hh:mm");
+      var now = moment().format("hh:mm");
+      var minAway;
+  
+      
+      console.log(snapVal.frequency);
+      
+      // every time the train has not yet passed
+      if (moment(now,"hh:mm").unix() <= moment(snapVal.time, "hh:mm").unix()){
+        minAway = moment(snapVal.time, "hh:mm").diff(moment(), "m");
+             
+      }
+  
+      // every time the train has passed
+    //   if (moment(now,"hh:mm").unix() >= moment(firstArrive, "hh:mm").unix()){
+    //       snapVal.time = moment(snapVal.time, "hh:mm").add(snapVal.frequency, "m");
+          
+    //   }
+  
+      
+      var trainDom = {
+        name: snapVal.trainName,
+        destination: snapVal.destination,
+        time: moment(snapVal.time, "hh:mm").format("hh:mm a"),
+        frequency: snapVal.frequency,
+        minAway: minAway
+      };
+  
+      var newTr = $("<tr>");
+  
+      // loop through the object and populate the dom with table rows
+      $.each(trainDom, function(key, value) {
+        $(newTr).append("<td>" + value + "</td>");
+      });
+  
+      $(".train-data").append(newTr);
+    },
+    function(errorObject) {
+      alert(errorObject.data);
     }
-
-
-    var trainDom = {
-      name: snapVal.trainName,
-      destination: snapVal.destination,
-      time: moment(snapVal.time, "hh:mm").format("hh:mm a"),
-      frequency: snapVal.frequency,
-      minAway: minAway
-    };
-
-    var newTr = $("<tr>");
-
-    // loop through the object and populate the dom with table rows
-    $.each(trainDom, function(key, value) {
-      $(newTr).append("<td>" + value + "</td>");
-    });
-
-    $(".train-data").append(newTr);
-  },
-  function(errorObject) {
-    alert(errorObject.data);
-  }
-);
+  );
