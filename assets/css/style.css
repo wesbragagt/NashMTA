@@ -1,11 +1,30 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
+html {
+    font-size: 62.5%;
+}
+
 body {
-  font-family: "Roboto", sans-serif;
-  background: url(../prism/prism.png);
-  background-size: auto;
+    font-family: "Roboto", sans-serif;
+    background: url(../prism/prism.png);
+    background-size: auto;
+    box-sizing: border-box;
 }
 
 .jumbotron {
-  background: none;
+    background: none;
+}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width: 1224px) {
+    html {
+        font-size: 72.5%;
+    }
+}
+
+/* Large screens ----------- */
+@media only screen and (min-width: 1824px) {
+    html {
+        font-size: 92.5%;
+    }
 }
