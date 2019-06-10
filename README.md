@@ -1,6 +1,6 @@
 # Nashville MTA Scheduler
 
-[Deployed at] (wesbragagt.github.io/NashMTA)
+[Deployed at] (https://wesbragagt.github.io/NashMTA)
 
 A web app dedicated to tracking Nashville's MTA bus schedule system from Central in downtown, where it takes user input on the first time of arrival, bus frequency and it calculates in real time the next time of arrival depending on the current time, as well as storing that information on firebase. 
 
